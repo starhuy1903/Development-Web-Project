@@ -1,91 +1,116 @@
 <%- include ../partials/header %> <%- include ../partials/categories-navbar %>
-<div class="container cart">
-  <% if (cart != null && !cart.paid ) { %>
-  <div class="row">
-    <div class="col-md-11 col-sm-12 m-auto table-responsive">
-      <table class="table text-center">
-        <thead>
-          <tr >
-            <th>Product</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>Quantity</th>
-            <th>&nbsp;</th>
-            <th>Total</th>
-            <th>Subtotal</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% products.forEach( product => { %> <% if(product != null) {%>
-          <tr class="my-auto">
-            <td>
-              <a
-              href="/products/<%=product.category.slug%>/<%=product._id%>"
-            >
-              <img src="<%=product.imagePath%>" class="img-small image-fluid" alt="image thumbnail" />
-              </a>
-            </td>
-            <td>
-              <div class="float-left mb-3">
-                <a class="title-link"
-                href="/products/<%=product.category.slug%>/<%=product._id%>"
+<section class="h-100 h-custom">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" class="h5">Shopping Bag</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Subtotal</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%products.forEach( product => { %> <% if(product != null) {%>
+              <tr>
+                <th scope="row">
+                  <div class="d-flex align-items-center">
+                    <img
+                      src="<%=product.imagePath%>"
+                      class="img-fluid rounded-3"
+                      style="width: 120px"
+                      alt="Book"
+                    />
+                    <div class="flex-column ms-4 ml-3">
+                      <p class="mb-2"><%= product.title %></p>
+                      <p class="mb-0 fw-light">
+                        Product No: <%= product.productCode %>
+                      </p>
+                    </div>
+                  </div>
+                </th>
+                <!-- <td class="align-middle">
+                  <p class="mb-0" style="font-weight: 500">Digital</p>
+                </td> -->
+                <td class="align-middle">
+                  <div class="d-flex flex-row">
+                    <a href="/reduce/<%=product._id%>"
+                      ><i class="fa fa-minus-square" aria-hidden="true"></i
+                    ></a>
+
+                    <input
+                      id="form1"
+                      min="0"
+                      name="quantity"
+                      value="<%= product.qty %>"
+                      type="number"
+                      class="form-control form-control-sm text-center"
+                      style="width: 50px"
+                      disabled="true"
+                    />
+
+                    <a href="/add-to-cart/<%=product._id%>"
+                      ><i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </td>
+                <td class="align-middle">$<%= product.price %></td>
+                <td class="align-middle">$<%= product.totalPrice %></td>
+                <!-- <td class="align-middle">
+                  <p class="mb-0" style="font-weight: 500">$9.99</p>
+                </td> -->
+              </tr>
+              <% } %> <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="card shadow-2-strong mb-5 mb-lg-0 px-3"
+          style="border-radius: 16px"
+        >
+          <div class="card-body p-4">
+            <div>
+              <div
+                class="d-flex justify-content-between"
+                style="font-weight: 500"
               >
-                <h6 class="text-left"><%= product.title %></h6> 
-                <p class="text-left">Product No: <%= product.productCode %></p>
+                <p class="mb-2">Subtotal</p>
+                <p class="mb-2">$<%= cart.totalCost %></p>
               </div>
-              
-              </a>
-            </td>
-            <td class="text-center">
-              <a href="/add-to-cart/<%=product._id%>"
-                ><i class="fa fa-plus-square" aria-hidden="true"></i
-              > </a>
-            </td>
-            <td class="text-center">
-              <p class="qty-display pt-1">
-              <%= product.qty %>
-            </p>
-          </td>
-            <td class="text-center" >
-              <a href="/reduce/<%=product._id%>"
-                ><i class="fa fa-minus-square" aria-hidden="true"></i
-              ></a>
-            </td>
-            <td>$<%= product.price %></td>
-            <td>$<%= product.totalPrice %></td>
-            <td>
-              <a
-                href="/removeAll/<%=product._id%>"
-                class="btn btn-danger btn-sm button-style-danger"
-                >Remove all</a
+
+              <div
+                class="d-flex justify-content-between"
+                style="font-weight: 500"
               >
-            </td>
-          </tr>
-          <% } %> <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<hr>
-  <div class="row mt-4 mr-auto">
-    <div class="col-md-11 col-sm-12 m-auto">
-      <strong>Total: <%= cart.totalCost %> </strong>
-    </div>
-  </div>
-  <div class="row mt-2 mr-auto">
-    <div class="col-md-11 col-sm-12 m-auto">
-      <a href="/checkout" class="btn btn-dark button-style">Checkout</a>
-    </div>
-  </div>
-  <% } else { %>
-  <div class="row text-center">
-    <div class="col-md-9 col-sm-9 m-auto">
-      <h2>No items in the cart</h2>
-    </div>
-  </div>
+                <p class="mb-0">Shipping</p>
+                <p class="mb-0">$0</p>
+              </div>
 
-  <% } %>
-</div>
+              <hr class="my-4" />
 
+              <div
+                class="d-flex justify-content-between mb-4"
+                style="font-weight: 500"
+              >
+                <p class="mb-2">Total (tax included)</p>
+                <p class="mb-2">$<%= cart.totalCost %></p>
+              </div>
+
+              <a href="/checkout" class="btn button-style btn-block btn-lg">
+                <div class="d-flex justify-content-between">
+                  <span>Checkout</span>
+                  <span>$<%= cart.totalCost %></span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <%- include ../partials/footer %>

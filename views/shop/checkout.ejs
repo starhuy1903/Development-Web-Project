@@ -4,9 +4,7 @@
   <div class="row mt-3 mb-3">
     <div class="col-md-8 m-auto">
       <% if (errorMsg) { %>
-      <div id="error" class="alert alert-danger">
-        <%= errorMsg %>
-      </div>
+      <div id="error" class="alert alert-danger"><%= errorMsg %></div>
       <% } else { %>
       <div id="error" class="alert alert-danger d-none"></div>
       <% } %>
@@ -43,9 +41,12 @@
         </div>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       </div>
-      <button id="submit-btn" type="submit" class="btn btn-dark button-style">
-        Buy now
-      </button>
+      <div>
+        <a class="btn btn-secondary" href="/shopping-cart">Back</a>
+        <button id="submit-btn" type="submit" class="btn btn-dark button-style">
+          Buy now
+        </button>
+      </div>
     </form>
   </div>
 </div>
