@@ -1,6 +1,6 @@
 :root {
-  --dark-blue: #478ba2;
-  --light-blue: #b9d4db;
+  --dark-teal: #4fb9af;
+  --light-teal: #81cdc6;
   --dark-orange: #e9765b;
   --light-orange: #f2a490;
   --dark-pink: #de5b6d;
@@ -88,7 +88,7 @@ a:hover,
 /* CATEGORIES NAVBAR */
 
 .navbar-custom {
-  background-color: var(--dark-blue);
+  background-color: var(--dark-teal);
 }
 
 .navbar-custom .navbar-brand,
@@ -99,7 +99,7 @@ a:hover,
 
 .navbar-custom .nav-item .nav-link:hover,
 .navbar-custom .nav-item.active .nav-link {
-  color: var(--light-blue) !important;
+  color: var(--light-teal) !important;
 }
 
 /* SEARCH BOX */
@@ -168,7 +168,7 @@ a:hover,
 
 .fa-chevron-circle-right {
   font-size: 50px;
-  color: var(--dark-blue);
+  color: var(--dark-teal);
   margin-top: 1.5em;
   border-radius: 55%;
   box-shadow: 5px 5px 5px var(--dark-gray);
@@ -204,12 +204,12 @@ hr.gradient-style {
 }
 
 .button-style {
-  background-color: var(--dark-blue);
+  background-color: var(--dark-teal);
   color: var(--ivory) !important;
 }
 
 .button-style:hover {
-  background-color: var(--light-blue);
+  background-color: var(--light-teal);
   color: var(--black) !important;
 }
 
@@ -298,16 +298,16 @@ hr.gradient-style {
 /* PAGINATION STYLE */
 .pagination .active .page-link {
   color: var(--ivory);
-  background-color: var(--dark-blue);
+  background-color: var(--dark-teal);
 }
 
 .pagination .page-link {
-  color: var(--dark-blue);
+  color: var(--dark-teal);
 }
 
 /* BREADCRUMBS STYLE */
 .breadcrumb-item a:hover {
-  color: var(--dark-blue) !important;
+  color: var(--dark-teal) !important;
 }
 
 /* SHOPPING CART STYLES */
@@ -358,7 +358,7 @@ ul {
   margin-right: 1em;
 }
 .white-links a:hover {
-  color: var(--light-blue) !important;
+  color: var(--light-teal) !important;
 }
 .footer-title {
   font-weight: 300;
@@ -373,7 +373,7 @@ ul {
   color: var(--ivory);
   background-color: var(--black);
   padding: 1em 1em 0.2em 1em;
-  border-bottom: 5px var(--dark-blue) solid;
+  border-bottom: 5px var(--dark-teal) solid;
 }
 .bottom-footer {
   font-size: 14px;
@@ -473,5 +473,21 @@ footer {
   .circle-img {
     width: 150px;
     height: 150px;
+  }
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
   }
 }
