@@ -1,54 +1,89 @@
 <%- include ../partials/header %> <%- include ../partials/categories-navbar %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 m-auto">
-      <h1 class="mt-4 mb-4">Sign Up Page</h1>
-      <% if(errorMsg != null && errorMsg.length>0) {%>
-      <div id="flash-msg" class="alert alert-danger">
-        <%=errorMsg %>
+<section style="height: 90vh">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img
+          src="https://magento.exsport.co.id//media/catalog/category/bags-category_1.jpg"
+          class="img-fluid"
+          alt="Sample image"
+        />
       </div>
-      <%}%>
-      <form action="/user/signup" method="POST">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="name"
-            class="form-control"
-            name="name"
-            id="name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            id="password"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password2">Verify Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password2"
-            id="password2"
-          />
-        </div>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <button type="submit" class="btn btn-primary button-style">
-          Sign Up
-        </button>
-      </form>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <!-- Flash message -->
+        <% if(errorMsg != null && errorMsg.length>0) {%>
+        <div id="flash-msg" class="alert alert-danger"><%=errorMsg %></div>
+        <%}%>
+        <form action="/user/signup" method="POST">
+          <h1 class="mt-4 mb-4 text-center">Sign Up</h1>
+
+          <!-- Name input -->
+          <div class="form-outline mb-4">
+            <label class="form-label" for="name">Name</label>
+            <input
+              type="name"
+              id="name"
+              name="name"
+              required
+              class="form-control form-control-lg"
+            />
+          </div>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="form-control form-control-lg"
+            />
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              class="form-control form-control-lg"
+            />
+          </div>
+          <div class="form-outline mb-3">
+            <label class="form-label" for="password2">Verify Password</label>
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              required
+              class="form-control form-control-lg"
+            />
+          </div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button
+              type="submit"
+              class="btn button-style btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem"
+            >
+              Sign up
+            </button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">
+              Login with existing account
+              <a href="/user/signin" class="link-danger text-danger fw-semibold"
+                >Sign In!</a
+              >
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <%- include ../partials/footer %>
