@@ -8,8 +8,8 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const flash = require("connect-flash");
+let MongoStore = require("connect-mongo")(session);
 const Category = require("./models/category");
-var MongoStore = require("connect-mongo")(session);
 const connectDB = require("./config/db");
 
 const app = express();
@@ -63,7 +63,7 @@ app.use(async (req, res, next) => {
 
 // add breadcrumbs
 get_breadcrumbs = function (url) {
-  var rtn = [{ name: "Home", url: "/" }],
+  let rtn = [{ name: "Home", url: "/" }],
     acc = "", // accumulative url
     arr = url.substring(1).split("/");
 
@@ -107,7 +107,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-var port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 app.set("port", port);
 app.listen(port, () => {
   console.log("Server running at port " + port);

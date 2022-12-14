@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const csrf = require("csurf");
-var passport = require("passport");
-var LocalStrategy = require("passport-local").Strategy;
+let passport = require("passport");
+let LocalStrategy = require("passport-local").Strategy;
 const Product = require("../models/product");
 const Order = require("../models/order");
 const Cart = require("../models/cart");
@@ -18,7 +18,7 @@ router.use(csrfProtection);
 
 // GET: display the signup form with csrf token
 router.get("/signup", middleware.isNotLoggedIn, (req, res) => {
-  var errorMsg = req.flash("error")[0];
+  let errorMsg = req.flash("error")[0];
   res.render("user/signup", {
     csrfToken: req.csrfToken(),
     errorMsg,
@@ -48,7 +48,7 @@ router.post(
       }
       // redirect to the previous URL
       if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
+        let oldUrl = req.session.oldUrl;
         req.session.oldUrl = null;
         res.redirect(oldUrl);
       } else {
@@ -64,7 +64,7 @@ router.post(
 
 // GET: display the signin form with csrf token
 router.get("/signin", middleware.isNotLoggedIn, async (req, res) => {
-  var errorMsg = req.flash("error")[0];
+  let errorMsg = req.flash("error")[0];
   res.render("user/signin", {
     csrfToken: req.csrfToken(),
     errorMsg,
@@ -100,7 +100,7 @@ router.post(
       }
       // redirect to old URL before signing in
       if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
+        let oldUrl = req.session.oldUrl;
         req.session.oldUrl = null;
         res.redirect(oldUrl);
       } else {
