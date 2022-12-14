@@ -15,7 +15,7 @@
               </tr>
             </thead>
             <tbody>
-              <%products.forEach( product => { %> <% if(product != null) {%>
+              <%products?.forEach( product => { %> <% if(product != null) {%>
               <tr>
                 <th scope="row">
                   <div class="d-flex align-items-center">
@@ -79,7 +79,7 @@
                 style="font-weight: 500"
               >
                 <p class="mb-2">Subtotal</p>
-                <p class="mb-2">$<%= cart.totalCost %></p>
+                <p class="mb-2">$<%= cart?.totalCost %></p>
               </div>
 
               <div
@@ -97,13 +97,13 @@
                 style="font-weight: 500"
               >
                 <p class="mb-2">Total (tax included)</p>
-                <p class="mb-2">$<%= cart.totalCost %></p>
+                <p class="mb-2">$<%= cart?.totalCost %></p>
               </div>
 
               <a href="/checkout" class="btn button-style btn-block btn-lg">
                 <div class="d-flex justify-content-between">
                   <span>Checkout</span>
-                  <span>$<%= cart.totalCost %></span>
+                  <span>$<%= cart?.totalCost %></span>
                 </div>
               </a>
             </div>
