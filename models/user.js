@@ -34,4 +34,5 @@ userSchema.methods.validPassword = function (candidatePassword) {
   }
 };
 
+
 module.exports = mongoose.model("User", userSchema);

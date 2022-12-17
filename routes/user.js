@@ -14,7 +14,7 @@ const {
 	validateSignup,
 	validateSignin,
 } = require('../config/validator');
-const csrfProtection = csrf();
+const csrfProtection = csrf({cookie: false});
 router.use(csrfProtection);
 
 // GET: display the signup form with csrf token
@@ -140,37 +140,73 @@ router.get('/edit-profile', middleware.isLoggedIn, async (req, res) => {
 	const errorMsg = req.flash('error')[0];
 	try {
 		// find all information of this user
-    const user = await User.findById(req.user._id);
-    res.render('user/edit-profile', {
-      user,
-      errorMsg,
-      successMsg,
-      pageName: 'Edit Profile',
-    });
+		const user = await User.findById(req.user._id);
+		res.render('user/edit-profile', {
+			user,
+			errorMsg,
+			successMsg,
+			pageName: 'Edit Profile',
+			csrfToken: req.csrfToken(),
+		});
 	} catch (err) {
 		console.log(err);
 		return res.redirect('/');
 	}
 });
-// PUT: handle the edit profile logic
-router.put('/edit-profile', middleware.isLoggedIn, async (req, res) => {
-  try {
-    // find the user and update the information
-    const user
-    = await User.findById(req.user._id);
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.address = req.body.address;
-    user.phone = req.body.phone;
-    await user.save();
-    req.flash('success', 'Successfully updated your profile!');
-    res.redirect('/user/edit-profile');
-  } catch (err) {
-    console.log(err);
-    req.flash('error', err.message);
-    return res.redirect('/user/edit-profile');
-  }
+
+function udpateUser(user, req) {
+	User.findById(user._id, function (err, foundUser) {
+		if (err) {
+			console.log(err);
+			return res.redirect('/');
+		}
+		foundUser.username = req.body.username;
+		foundUser.email = req.body.email;
+		foundUser.firstName = req.body.firstName;
+		foundUser.lastName = req.body.lastName;
+		foundUser.address = req.body.address;
+		foundUser.phone = req.body.phone;
+		foundUser.save();
+	});
+}
+// POST: handle the edit profile logic and update the user's information
+router.post('/edit-profile', middleware.isLoggedIn, async (req, res, next) => {
+	try {
+		// find all information of this user
+		const user = await User.findById(req.user._id);
+		// if the user changes the username, check if the new username is already taken
+		if (req.body.username !== user.username) {
+			const username = await User.findOne({username: req.body.username});
+			if (username) {
+				req.flash('error', 'Username is already taken');
+				return res.redirect('/user/edit-profile');
+			}
+		}
+		// if the user changes the email, check if the new email is already taken
+		if (req.body.email !== user.email) {
+			const email = await User.findOne({email: req.body.email});
+			if (email) {
+				req.flash('error', 'Email is already taken');
+				return res.redirect('/user/edit-profile');
+			}
+		}
+		if(req.body.phone !== user.phone){
+			const phone = await User.findOne({phone: req.body.phone});
+			if(phone){
+				req.flash('error', 'Phone number is already taken');
+				return res.redirect('/user/edit-profile');
+			}
+		}
+		// update the user's information
+		udpateUser(user, req);
+		req.flash('success', 'Successfully updated your profile');
+		res.redirect('/user/profile');
+	} catch (err) {
+		console.log(err);
+		return res.redirect('/');
+	}
 });
+
 // GET: logout
 router.get('/logout', middleware.isLoggedIn, (req, res) => {
 	req.logout();
