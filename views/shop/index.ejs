@@ -117,10 +117,10 @@
             </select>
             <div id="btn-filter">
               <% if(pageName == 'All Products' || pageName == 'Search Results') { %>
-                  <button class="button-style btn btn-filter" onclick="fetData(1,'<%=home%>')">Apply</button>
+                  <button class="button-style btn btn-filter" onclick="setFilter(1,'<%=home%>')">Apply</button>
                 <%} 
                 else { %>
-                  <button class="button-style btn btn-filter" onclick="fetData(1,'<%=home%>')">Apply</button>
+                  <button class="button-style btn btn-filter" onclick="setFilter(1,'<%=home%>')">Apply</button>
                 <%}
               %>
             </div>

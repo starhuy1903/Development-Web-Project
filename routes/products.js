@@ -18,7 +18,7 @@ router.get("/api/search", async (req, res) => {
       title: { $regex: req.query.search, $options: "i" },
       price: {$lte: max, $gte: min}
     })
-      .sort("-createdAt")
+      .sort({[req.query.column]: req.query.sort})
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category")
@@ -50,7 +50,7 @@ router.get("/api/:slug", async (req, res) => {
       category: foundCategory.id,
       price: {$lte: max, $gte: min}
      })
-     .sort({[req.query.column]: req.query.sort})
+      .sort({[req.query.column]: req.query.sort})
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");
@@ -75,7 +75,7 @@ router.get("/api/", async (req, res) => {
   const query = `max=${max}&min=${min}`
   try {
     const products = await Product.find({price: {$lte: max, $gte: min}})
-      .sort("-createdAt")
+      .sort({[req.query.column]: req.query.sort})
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");

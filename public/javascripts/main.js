@@ -28,6 +28,12 @@ let paginationNav = document.getElementById("pagination-nav")
 let searchInput = document.getElementsByClassName("search-input")
 let sort = document.getElementById("sort-by");
 
+
+let max = displayValTwo.value
+let min = displayValOne.value
+let column = sort.value.substring(0,sort.value.indexOf('-'))
+let sortBy = sort.value.substring(sort.value.indexOf('-')+1)
+
 function slideOne(){
   if(parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap){
       sliderOne.value = parseInt(sliderTwo.value) - minGap;
@@ -49,11 +55,7 @@ function fillColor(){
 }
 
 function fetData(current, slug){
-  let url = `http://localhost:3000` + slug + `page=${current}&max=${displayValTwo.value}&min=${displayValOne.value}&column=${sort.value.substring(0,sort.value.indexOf('-'))}&sort=${sort.value.substring(sort.value.indexOf('-')+1)}`
-  console.log(url)
-  sliderTwo.value = displayValTwo.value 
-  sliderOne.value = displayValOne.value
-  fillColor()
+  let url = `http://localhost:3000` + slug + `page=${current}&max=${max}&min=${min}&column=${column}&sort=${sortBy}`
   fetch(url)
   .then((response) => response.json())
   .then((data) => {
@@ -141,6 +143,20 @@ function fetData(current, slug){
       paginationNav.innerHTML = pagination
 
   });
+}
+
+
+function setFilter(current, slug){
+    /*slug = _slug
+    current = _current*/
+    max = displayValTwo.value
+    min =displayValOne.value
+    column = sort.value.substring(0,sort.value.indexOf('-'))
+    sortBy = sort.value.substring(sort.value.indexOf('-')+1)
+    sliderTwo.value = displayValTwo.value 
+    sliderOne.value = displayValOne.value
+    fillColor()
+    fetData(current, slug)
 }
 
 
