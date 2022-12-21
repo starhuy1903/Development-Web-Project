@@ -67,7 +67,114 @@
 
   <hr class="gradient-style" />
   <!-- Contents -->
-  <div class="row pl-4 pr-4">
+  <div class="row">
+    <div class="col-lg-2">
+      <div class="row1">
+        <div class="wrapper">
+          <div class="div">
+            <h3>Filter</h3>
+          </div>
+          <h6>Price range</h6>
+          <div class="container filter">
+              <div class="slider-track"></div>
+              <input type="range" min="0" max="100" value="<%=min%>" id="slider-1" oninput="slideOne()">
+              <input type="range" min="0" max="100" value="<%=max%>" id="slider-2" oninput="slideTwo()">
+          </div>
+          <div>
+            <div class="flex space-between">
+                <span>Minimum</span>
+                <span>Maximum</span>
+            </div>
+            <!-- <form action="<%=home%>" method="get">
+              <div class="flex">
+                <input type="text" id="range1" name="min">
+                <span class="pl-1 pr-1">----</span>
+                <input type="text" id="range2" name="max">
+                <input type="hidden" name="page" value="<%=current%>">
+                <% if(search) { %>
+                  <input type="hidden" name="search" value="<%=search%>">
+                  <%} %>
+              </div>
+              <div>
+                <button class="button-style btn btn-filter">Apply</button>
+              </div>
+            </form> -->
+            <div class="flex">
+              <input type="text" id="range1" name="min">
+              <span class="pl-1 pr-1">----</span>
+              <input type="text" id="range2" name="max">
+              <input type="hidden" name="page" value="<%=current%>">
+              <% if(search) { %>
+                <input type="hidden" name="search" value="<%=search%>">
+                <%} %>
+            </div>
+            <label for="sort-by">Sort by</label>
+            <select name="sort-by" id="sort-by">
+                <option value="createdAt-asc">Created Ascending</option>
+                <option value="createdAt-desc">Created Descending</option>
+                <option value="price-asc">Price Ascending</option>
+                <option value="price-desc">Price Descending</option>
+            </select>
+            <div id="btn-filter">
+              <% if(pageName == 'All Products' || pageName == 'Search Results') { %>
+                  <button class="button-style btn btn-filter" onclick="fetData(1,'<%=home%>')">Apply</button>
+                <%} 
+                else { %>
+                  <button class="button-style btn btn-filter" onclick="fetData(1,'<%=home%>')">Apply</button>
+                <%}
+              %>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col-lg-9">
+      <div class="row pl-4 pr-4" id="filterProduct">
+        <% products.forEach((product) => { %>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 product-index-box">
+          <div class="single-product d-flex flex-column h-100">
+            <a
+              class="title-link"
+              href="/products/<%=product.category.slug%>/<%=product._id%>"
+            >
+              <img src="<%= product.imagePath %>" alt="Bag" class="img-fluid"
+            /></a>
+            <div class="product-info">
+              <a
+                class="title-link"
+                href="/products/<%=product.category.slug%>/<%=product._id%>"
+              >
+                <h6 class="mt-2 mb-2"><%= product.title %></h6></a
+              >
+              <div class="price">$<%= product.price %></div>
+            </div>
+            <% if(product.available) {%>
+            <a
+              href="/add-to-cart/<%=product._id%>"
+              class="btn btn-block btn-secondary button-style mt-auto mb-2"
+            >
+              Add to Shopping Cart
+            </a>
+            <% } else { %>
+            <a
+              href="#"
+              class="btn btn-block btn-danger button-style-danger mt-2 mb-2"
+            >
+              Sold out
+            </a>
+            <%} %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <%- include ../partials/pagination %>
+    </div>
+  </div>
+
+
+  <!-- <div class="row pl-4 pr-4">
     <% products.forEach((product) => { %>
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 product-index-box">
       <div class="single-product d-flex flex-column h-100">
@@ -105,7 +212,23 @@
     </div>
     <% }) %>
   </div>
-
-  <%- include ../partials/pagination %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+      Level 1: .col-sm-3
+      </div>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-8 col-sm-6">
+          Level 2: .col-8 .col-sm-6
+          </div>
+          <div class="col-4 col-sm-6">
+          Level 2: .col-4 .col-sm-6
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+ 
 </div>
 <%- include ../partials/footer %>
