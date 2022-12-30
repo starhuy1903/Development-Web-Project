@@ -225,12 +225,35 @@ router.get("/:slug/:id", async (req, res) => {
   const errorMsg = req.flash("error")[0];
   try {
     const product = await Product.findById(req.params.id).populate("category");
+    const relatedProduct = await Product.aggregate([
+      {
+        $lookup:
+           {
+             from: "categories",
+             let: { category: "$category"},
+             pipeline: [
+                { $match:
+                   { $expr:
+                      { $and:
+                         [
+                           { $eq: [ "$_id",  "$$category" ] },
+                         ]
+                      }
+                   }
+                },
+             ],
+             as: "category"
+           }
+      },{ $match: { "category._id": product.category._id } },
+      { $sample: { size: 3 } }
+    ])
     res.render("shop/product", {
       pageName: product.title,
       product,
       successMsg,
       errorMsg,
       moment: moment,
+      products: relatedProduct
     });
   } catch (error) {
     console.log(error);
