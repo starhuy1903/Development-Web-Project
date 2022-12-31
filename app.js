@@ -1,7 +1,8 @@
-require("dotenv").config();
+
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
@@ -32,7 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "ạhdakjsdhk",
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
