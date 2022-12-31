@@ -53,4 +53,51 @@
     </div>
   </div>
 </div>
+
+<!-- Related Product -->
+
+<div class="col">
+  <div class="row">
+    <h2 class="related-product-title">Related Product</h2>
+  </div>
+  <div class="row flex-center">
+    <% products.forEach((product1) => { %>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 product-index-box">
+      <div class="single-product d-flex flex-column h-100">
+        <a
+          class="title-link"
+          href="/products/<%=product1.category[0].slug%>/<%=product1._id%>"
+        >
+          <img src="<%= product1.imagePath %>" alt="Bag" class="img-fluid"
+        /></a>
+        <div class="product-info">
+          <a
+            class="title-link"
+            href="/products/<%=product1.category[0].slug%>/<%=product1._id%>"
+          >
+            <h6 class="mt-2 mb-2"><%= product1.title %></h6></a
+          >
+          <div class="price">$<%= product1.price %></div>
+        </div>
+        <% if(product1.available) {%>
+        <a
+          href="/add-to-cart/<%=product1._id%>"
+          class="btn btn-block btn-secondary button-style mt-auto mb-2"
+        >
+          Add to Shopping Cart
+        </a>
+        <% } else { %>
+        <a
+          href="#"
+          class="btn btn-block btn-danger button-style-danger mt-2 mb-2"
+        >
+          Sold out
+        </a>
+        <%} %>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
 <%- include ../partials/footer %>
