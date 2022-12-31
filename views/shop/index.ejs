@@ -85,20 +85,6 @@
                 <span>Minimum</span>
                 <span>Maximum</span>
             </div>
-            <!-- <form action="<%=home%>" method="get">
-              <div class="flex">
-                <input type="text" id="range1" name="min">
-                <span class="pl-1 pr-1">----</span>
-                <input type="text" id="range2" name="max">
-                <input type="hidden" name="page" value="<%=current%>">
-                <% if(search) { %>
-                  <input type="hidden" name="search" value="<%=search%>">
-                  <%} %>
-              </div>
-              <div>
-                <button class="button-style btn btn-filter">Apply</button>
-              </div>
-            </form> -->
             <div class="flex">
               <input type="text" id="range1" name="min">
               <span class="pl-1 pr-1">----</span>
@@ -172,63 +158,5 @@
       <%- include ../partials/pagination %>
     </div>
   </div>
-
-
-  <!-- <div class="row pl-4 pr-4">
-    <% products.forEach((product) => { %>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 product-index-box">
-      <div class="single-product d-flex flex-column h-100">
-        <a
-          class="title-link"
-          href="/products/<%=product.category.slug%>/<%=product._id%>"
-        >
-          <img src="<%= product.imagePath %>" alt="Bag" class="img-fluid"
-        /></a>
-        <div class="product-info">
-          <a
-            class="title-link"
-            href="/products/<%=product.category.slug%>/<%=product._id%>"
-          >
-            <h6 class="mt-2 mb-2"><%= product.title %></h6></a
-          >
-          <div class="price">$<%= product.price %></div>
-        </div>
-        <% if(product.available) {%>
-        <a
-          href="/add-to-cart/<%=product._id%>"
-          class="btn btn-block btn-secondary button-style mt-auto mb-2"
-        >
-          Add to Shopping Cart
-        </a>
-        <% } else { %>
-        <a
-          href="#"
-          class="btn btn-block btn-danger button-style-danger mt-2 mb-2"
-        >
-          Sold out
-        </a>
-        <%} %>
-      </div>
-    </div>
-    <% }) %>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-3">
-      Level 1: .col-sm-3
-      </div>
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="col-8 col-sm-6">
-          Level 2: .col-8 .col-sm-6
-          </div>
-          <div class="col-4 col-sm-6">
-          Level 2: .col-4 .col-sm-6
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
- 
 </div>
 <%- include ../partials/footer %>

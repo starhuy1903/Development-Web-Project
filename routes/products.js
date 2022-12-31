@@ -161,7 +161,7 @@ router.get("/search", async (req, res) => {
       errorMsg,
       current: page,
       breadcrumbs: null,
-      home: "/products/api/search?search=" + req.query.search+"&",
+      home: `/products/api/search?search=${req.query.search}&`,
       slug: "Search Results",
       pages: Math.ceil(count / perPage),
       query: query,
