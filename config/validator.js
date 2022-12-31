@@ -4,6 +4,7 @@ const userSignUpValidationRules = () => {
   return [
     check("name", "Name is required").not().isEmpty(),
     check("email", "Invalid email").not().isEmpty().isEmail(),
+    check("phone", "Invalid phone number").not().isEmpty().isMobilePhone(),
     check("password", "Please enter a password with 4 or more characters")
       .not()
       .isEmpty()

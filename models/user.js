@@ -15,6 +15,10 @@ const userSchema = Schema({
     type: String,
     require: true,
   },
+  phone: {
+    type: String,
+    require: true,
+  }
 });
 
 // encrypt the password before storing
