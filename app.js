@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const flash = require("connect-flash");
-let MongoStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongo")(session);
 const Category = require("./models/category");
 const connectDB = require("./config/db");
 
@@ -61,8 +61,8 @@ app.use(async (req, res, next) => {
 });
 
 // add breadcrumbs
-get_breadcrumbs = function (url) {
-  let rtn = [{ name: "Home", url: "/" }],
+get_breadcrumbs = (url) => {
+  const rtn = [{ name: "Home", url: "/" }],
     acc = "", // accumulative url
     arr = url.substring(1).split("/");
 
@@ -75,7 +75,7 @@ get_breadcrumbs = function (url) {
   }
   return rtn;
 };
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   req.breadcrumbs = get_breadcrumbs(req.originalUrl);
   next();
 });
@@ -91,12 +91,12 @@ app.use("/pages", pagesRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -106,7 +106,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-let port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.set("port", port);
 app.listen(port, () => {
   console.log("Server running at port " + port);

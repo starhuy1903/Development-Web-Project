@@ -9,7 +9,7 @@ const {
 const csrfProtection = csrf();
 router.use(csrfProtection);
 
-//GET: display abous us page
+//GET: display about us page
 router.get("/about-us", (req, res) => {
   res.render("pages/about-us", {
     pageName: "About Us",
@@ -84,7 +84,7 @@ router.post(
       if (error) {
         req.flash(
           "error",
-          "An error occured... Please check your internet connection and try again later"
+          "An error occurred... Please check your internet connection and try again later"
         );
         return res.redirect("/pages/contact-us");
       } else {

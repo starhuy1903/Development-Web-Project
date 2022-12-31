@@ -38,7 +38,7 @@
 
     <link rel="stylesheet" href="/stylesheets/style.css" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Mapbox -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
@@ -51,68 +51,77 @@
   <body>
     <div id="page-container">
       <div id="content-wrap">
-    <div class="row nav-container mx-auto">
-      <div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="search-container">
-          <form class="form-inline" action="/products/search" method="GET">
-            <input
-              class="search-input"
-              type="search"
-              placeholder="Search"
-              name="search"
-            />
-          </form>
+        <div class="row nav-container mx-auto">
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            <div class="search-container">
+              <form class="form-inline" action="/products/search" method="GET">
+                <input
+                  class="search-input"
+                  type="search"
+                  placeholder="Search"
+                  name="search"
+                />
+              </form>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12 logo-container">
+            <a href="/">
+              <img
+                class="logo-img img-fluid"
+                src="/images/shop-icon.png"
+                alt="logo"
+              />
+              <h4 class="logo-title">BestBags</h4>
+            </a>
+          </div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12 right-nav">
+            <ul>
+              <li>
+                <a href="/shopping-cart">
+                  <i class="fas fa-shopping-cart"></i> <% if(session.cart) { %>
+                  <span class="badge badge-pill badge-info"
+                    ><%= session.cart.totalQty %></span
+                  >
+                  <% } else { %>
+                  <span class="badge badge-pill badge-info">0</span>
+                  <% } %>
+                </a>
+              </li>
+              <% if (login) { %>
+              <li>
+                <a
+                  class="dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user"></i> Welcome <%=currentUser.username%>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/user/profile">User Account</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/user/edit-profile"
+                    >Edit profile</a
+                  >
+                  <a class="dropdown-item" href="/user/logout">Logout</a>
+                </div>
+              </li>
+              <% } else {%>
+              <li>
+                <a href="/user/signup"> Sign Up</a>
+              </li>
+              <li>
+                <a href="/user/signin"> Sign In</a>
+              </li>
+              <% }%>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <div class="col-md-4 col-sm-12 col-xs-12 logo-container">
-        <a href="/">
-          <img class="logo-img img-fluid" src="/images/shop-icon.png" alt="logo" />
-          <h4 class="logo-title">BestBags</h4>
-        </a>
-      </div>
-
-      <div class="col-md-4 col-sm-12 col-xs-12 right-nav">
-        <ul>
-          <li>
-            <a href="/shopping-cart">
-              <i class="fas fa-shopping-cart"></i> <% if(session.cart) { %>
-              <span class="badge badge-pill badge-info"
-                ><%= session.cart.totalQty %></span
-              >
-              <% } else { %>
-              <span class="badge badge-pill badge-info">0</span>
-              <% } %>
-            </a>
-          </li>
-          <% if (login) { %>
-          <li>
-            <a
-              class="dropdown-toggle"
-              href="#"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fas fa-user"></i> Welcome <%=currentUser.username%>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/user/profile">User Account</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/user/edit-profile">Edit profile</a>
-              <a class="dropdown-item" href="/user/logout">Logout</a>
-            </div>
-          </li>
-          <% } else {%>
-          <li>
-            <a href="/user/signup"> Sign Up</a>
-          </li>
-          <li>
-            <a href="/user/signin"> Sign In</a>
-          </li>
-          <% }%>
-        </ul>
-      </div>
     </div>
-
+  </body>
+</html>

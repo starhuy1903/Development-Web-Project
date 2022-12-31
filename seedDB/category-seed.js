@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const connectDB = require("./../config/db");
 connectDB();
 
-async function seedDB() {
-  async function seedCateg(titleStr) {
+const seedDB = async () => {
+  const seedCateg = async (titleStr) => {
     try {
       const categ = await new Category({ title: titleStr });
       await categ.save();
@@ -14,12 +14,12 @@ async function seedDB() {
       console.log(error);
       return error;
     }
-  }
+  };
 
-  async function closeDB() {
+  const closeDB = async () => {
     console.log("CLOSING CONNECTION");
     await mongoose.disconnect();
-  }
+  };
   await seedCateg("Backpacks");
   await seedCateg("Briefcases");
   await seedCateg("Mini Bags");
@@ -28,6 +28,6 @@ async function seedDB() {
   await seedCateg("Totes");
   await seedCateg("Purses");
   await closeDB();
-}
+};
 
 seedDB();

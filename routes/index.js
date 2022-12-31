@@ -2,7 +2,6 @@ const express = require("express");
 const csrf = require("csurf");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const Product = require("../models/product");
-const Category = require("../models/category");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
 const middleware = require("../middleware");
@@ -230,7 +229,7 @@ router.post("/checkout", middleware.isLoggedIn, async (req, res) => {
       source: req.body.stripeToken,
       description: "Test charge",
     },
-    function (err, charge) {
+    (err, charge) => {
       if (err) {
         req.flash("error", err.message);
         console.log(err);
@@ -262,7 +261,7 @@ router.post("/checkout", middleware.isLoggedIn, async (req, res) => {
 });
 
 // create products array to store the info of each product in the cart
-async function productsFromCart(cart) {
+const productsFromCart = async (cart) => {
   let products = []; // array of objects
   for (const item of cart.items) {
     let foundProduct = (
@@ -273,6 +272,6 @@ async function productsFromCart(cart) {
     products.push(foundProduct);
   }
   return products;
-}
+};
 
 module.exports = router;

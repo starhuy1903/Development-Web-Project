@@ -6,18 +6,14 @@
   <div class="row mt-3 mb-3">
     <div class="col-md-12 m-auto">
       <% if (successMsg) { %>
-      <div id="success" class="alert alert-success">
-        <%= successMsg %>
-      </div>
+      <div id="success" class="alert alert-success"><%= successMsg %></div>
       <% } else { %>
       <div id="success" class="alert alert-success d-none"></div>
       <% } %>
     </div>
     <div class="col-md-12 m-auto">
       <% if (errorMsg) { %>
-      <div id="error" class="alert alert-danger">
-        <%= errorMsg %>
-      </div>
+      <div id="error" class="alert alert-danger"><%= errorMsg %></div>
       <% } else { %>
       <div id="error" class="alert alert-danger d-none"></div>
       <% } %>
@@ -76,45 +72,66 @@
           </div>
           <h6>Price range</h6>
           <div class="container filter">
-              <div class="slider-track"></div>
-              <input type="range" min="0" max="100" value="<%=min%>" id="slider-1" oninput="slideOne()">
-              <input type="range" min="0" max="100" value="<%=max%>" id="slider-2" oninput="slideTwo()">
+            <div class="slider-track"></div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="<%=min%>"
+              id="slider-1"
+              oninput="slideOne()"
+            />
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="<%=max%>"
+              id="slider-2"
+              oninput="slideTwo()"
+            />
           </div>
           <div>
             <div class="flex space-between">
-                <span>Minimum</span>
-                <span>Maximum</span>
+              <span>Minimum</span>
+              <span>Maximum</span>
             </div>
             <div class="flex">
-              <input type="text" id="range1" name="min">
+              <input type="text" id="range1" name="min" />
               <span class="pl-1 pr-1">----</span>
-              <input type="text" id="range2" name="max">
-              <input type="hidden" name="page" value="<%=current%>">
+              <input type="text" id="range2" name="max" />
+              <input type="hidden" name="page" value="<%=current%>" />
               <% if(search) { %>
-                <input type="hidden" name="search" value="<%=search%>">
-                <%} %>
+              <input type="hidden" name="search" value="<%=search%>" />
+              <%} %>
             </div>
             <label for="sort-by">Sort by</label>
             <select name="sort-by" id="sort-by">
-                <option value="createdAt-asc">Created Ascending</option>
-                <option value="createdAt-desc">Created Descending</option>
-                <option value="price-asc">Price Ascending</option>
-                <option value="price-desc">Price Descending</option>
+              <option value="createdAt-asc">Created Ascending</option>
+              <option value="createdAt-desc">Created Descending</option>
+              <option value="price-asc">Price Ascending</option>
+              <option value="price-desc">Price Descending</option>
             </select>
             <div id="btn-filter">
-              <% if(pageName == 'All Products' || pageName == 'Search Results') { %>
-                  <button class="button-style btn btn-filter" onclick="setFilter(1,'<%=home%>')">Apply</button>
-                <%} 
-                else { %>
-                  <button class="button-style btn btn-filter" onclick="setFilter(1,'<%=home%>')">Apply</button>
-                <%}
-              %>
+              <% if(pageName == 'All Products' || pageName == 'Search Results')
+              { %>
+              <button
+                class="button-style btn btn-filter"
+                onclick="setFilter(1,'<%=home%>')"
+              >
+                Apply
+              </button>
+              <%} else { %>
+              <button
+                class="button-style btn btn-filter"
+                onclick="setFilter(1,'<%=home%>')"
+              >
+                Apply
+              </button>
+              <%} %>
             </div>
-            
           </div>
         </div>
       </div>
-      
     </div>
     <div class="col-lg-9">
       <div class="row pl-4 pr-4" id="filterProduct">

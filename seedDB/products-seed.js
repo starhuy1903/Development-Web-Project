@@ -7,7 +7,7 @@ const faker = require("faker");
 const connectDB = require("./../config/db");
 connectDB();
 
-async function seedDB() {
+const seedDB = async () => {
   faker.seed(0);
 
   //----------------------Backpacks
@@ -192,7 +192,7 @@ async function seedDB() {
     "https://p1.pxfuel.com/preview/844/198/547/bag-burlap-advertising.jpg",
   ];
 
-  async function seedProducts(titlesArr, imgsArr, categStr) {
+  const seedProducts = async (titlesArr, imgsArr, categStr) => {
     try {
       const categ = await Category.findOne({ title: categStr });
       for (let i = 0; i < titlesArr.length; i++) {
@@ -212,12 +212,12 @@ async function seedDB() {
       console.log(error);
       return error;
     }
-  }
+  };
 
-  async function closeDB() {
+  const closeDB = async () => {
     console.log("CLOSING CONNECTION");
     await mongoose.disconnect();
-  }
+  };
 
   await seedProducts(backpacks_titles, backpacks_imgs, "Backpacks");
   await seedProducts(briefcases_titles, briefcases_imgs, "Briefcases");
@@ -232,6 +232,6 @@ async function seedDB() {
   await seedProducts(totes_titles, totes_imgs, "Totes");
 
   await closeDB();
-}
+};
 
 seedDB();

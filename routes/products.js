@@ -2,93 +2,105 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 const Category = require("../models/category");
-let moment = require("moment");
+const moment = require("moment");
 
 router.get("/api/search", async (req, res) => {
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
   const successMsg = req.flash("success")[0];
   const errorMsg = req.flash("error")[0];
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
 
   try {
     const products = await Product.find({
       title: { $regex: req.query.search, $options: "i" },
-      price: {$lte: max, $gte: min}
+      price: { $lte: max, $gte: min },
     })
-      .sort({[req.query.column]: req.query.sort})
+      .sort({ [req.query.column]: req.query.sort })
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category")
       .exec();
     const count = await Product.count({
       title: { $regex: req.query.search, $options: "i" },
-      price: {$lte: max, $gte: min}
+      price: { $lte: max, $gte: min },
     });
-    res.json({allProducts: products, count: count, pages: Math.ceil(count / perPage), current: page})
-    
+    res.json({
+      allProducts: products,
+      count: count,
+      pages: Math.ceil(count / perPage),
+      current: page,
+    });
   } catch (error) {
     console.log(error);
     res.redirect("/");
   }
 });
-
 
 router.get("/api/:slug", async (req, res) => {
   const successMsg = req.flash("success")[0];
   const errorMsg = req.flash("error")[0];
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
   try {
     const foundCategory = await Category.findOne({ slug: req.params.slug });
-    const allProducts = await Product.find({ 
+    const allProducts = await Product.find({
       category: foundCategory.id,
-      price: {$lte: max, $gte: min}
-     })
-      .sort({[req.query.column]: req.query.sort})
+      price: { $lte: max, $gte: min },
+    })
+      .sort({ [req.query.column]: req.query.sort })
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");
 
-    const count = await Product.count({ category: foundCategory.id , price: {$lte: max, $gte: min}});
-    res.json({allProducts: allProducts, count: count, pages: Math.ceil(count / perPage), current: page})
+    const count = await Product.count({
+      category: foundCategory.id,
+      price: { $lte: max, $gte: min },
+    });
+    res.json({
+      allProducts,
+      count,
+      pages: Math.ceil(count / perPage),
+      current: page,
+    });
   } catch (error) {
     console.log(error);
     return res.redirect("/");
   }
 });
 
-
-
 router.get("/api/", async (req, res) => {
   const successMsg = req.flash("success")[0];
   const errorMsg = req.flash("error")[0];
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
   try {
-    const products = await Product.find({price: {$lte: max, $gte: min}})
-      .sort({[req.query.column]: req.query.sort})
+    const products = await Product.find({ price: { $lte: max, $gte: min } })
+      .sort({ [req.query.column]: req.query.sort })
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");
 
-    const count = await Product.count({price: {$lte: max, $gte: min}});
-    res.json({allProducts: products, count: count, pages: Math.ceil(count / perPage), current: page})
-    
+    const count = await Product.count({ price: { $lte: max, $gte: min } });
+    res.json({
+      allProducts: products,
+      count: count,
+      pages: Math.ceil(count / perPage),
+      current: page,
+    });
   } catch (error) {
     console.log(error);
     res.redirect("/");
   }
 });
-
 
 // GET: display all products
 router.get("/", async (req, res) => {
@@ -96,17 +108,17 @@ router.get("/", async (req, res) => {
   const errorMsg = req.flash("error")[0];
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
   try {
-    const products = await Product.find({price: {$lte: max, $gte: min}})
+    const products = await Product.find({ price: { $lte: max, $gte: min } })
       .sort("-createdAt")
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");
 
-    const count = await Product.count({price: {$lte: max, $gte: min}});
+    const count = await Product.count({ price: { $lte: max, $gte: min } });
 
     res.render("shop/index", {
       pageName: "All Products",
@@ -120,8 +132,8 @@ router.get("/", async (req, res) => {
       slug: "All Products",
       query: query,
       search: req.query.search,
-      max: max, 
-      min: min
+      max: max,
+      min: min,
     });
   } catch (error) {
     console.log(error);
@@ -129,21 +141,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // GET: search box
 router.get("/search", async (req, res) => {
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
   const successMsg = req.flash("success")[0];
   const errorMsg = req.flash("error")[0];
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
 
   try {
     const products = await Product.find({
       title: { $regex: req.query.search, $options: "i" },
-      price: {$lte: max, $gte: min}
+      price: { $lte: max, $gte: min },
     })
       .sort("-createdAt")
       .skip(perPage * page - perPage)
@@ -152,7 +163,7 @@ router.get("/search", async (req, res) => {
       .exec();
     const count = await Product.count({
       title: { $regex: req.query.search, $options: "i" },
-      price: {$lte: max, $gte: min}
+      price: { $lte: max, $gte: min },
     });
     res.render("shop/index", {
       pageName: "Search Results",
@@ -166,8 +177,8 @@ router.get("/search", async (req, res) => {
       pages: Math.ceil(count / perPage),
       query: query,
       search: req.query.search,
-      max: max, 
-      min: min
+      max: max,
+      min: min,
     });
   } catch (error) {
     console.log(error);
@@ -181,21 +192,24 @@ router.get("/:slug", async (req, res) => {
   const errorMsg = req.flash("error")[0];
   const perPage = 8;
   let page = parseInt(req.query.page) || 1;
-  const min = req.query.min || 0
-  const max = req.query.max || 1000000
-  const query = `max=${max}&min=${min}`
+  const min = req.query.min || 0;
+  const max = req.query.max || 1000000;
+  const query = `max=${max}&min=${min}`;
   try {
     const foundCategory = await Category.findOne({ slug: req.params.slug });
-    const allProducts = await Product.find({ 
+    const allProducts = await Product.find({
       category: foundCategory.id,
-      price: {$lte: max, $gte: min}
-     })
+      price: { $lte: max, $gte: min },
+    })
       .sort("-createdAt")
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("category");
 
-    const count = await Product.count({ category: foundCategory.id , price: {$lte: max, $gte: min}});
+    const count = await Product.count({
+      category: foundCategory.id,
+      price: { $lte: max, $gte: min },
+    });
 
     res.render("shop/index", {
       pageName: foundCategory.title,
@@ -205,13 +219,13 @@ router.get("/:slug", async (req, res) => {
       errorMsg,
       current: page,
       breadcrumbs: req.breadcrumbs,
-      home: "/products/api/" + req.params.slug.toString()+"?",
+      home: "/products/api/" + req.params.slug.toString() + "?",
       slug: req.params.slug.toString(),
       pages: Math.ceil(count / perPage),
       query: query,
       search: req.query.search,
-      max: max, 
-      min: min
+      max: max,
+      min: min,
     });
   } catch (error) {
     console.log(error);
@@ -227,39 +241,30 @@ router.get("/:slug/:id", async (req, res) => {
     const product = await Product.findById(req.params.id).populate("category");
     const relatedProduct = await Product.aggregate([
       {
-        $lookup:
-           {
-             from: "categories",
-             let: { category: "$category"},
-             pipeline: [
-                { $match:
-                   { $expr:
-                      { $and:
-                         [
-                           { $eq: [ "$_id",  "$$category" ] },
-                         ]
-                      }
-                   }
-                },
-             ],
-             as: "category"
-           }
-      },{ $match: { "category._id": product.category._id } },
-      { $sample: { size: 3 } }
-    ])
+        $lookup: {
+          from: "categories",
+          let: { category: "$category" },
+          pipeline: [
+            { $match: { $expr: { $and: [{ $eq: ["$_id", "$$category"] }] } } },
+          ],
+          as: "category",
+        },
+      },
+      { $match: { "category._id": product.category._id } },
+      { $sample: { size: 3 } },
+    ]);
     res.render("shop/product", {
       pageName: product.title,
       product,
       successMsg,
       errorMsg,
       moment: moment,
-      products: relatedProduct
+      products: relatedProduct,
     });
   } catch (error) {
     console.log(error);
     return res.redirect("/");
   }
 });
-
 
 module.exports = router;
