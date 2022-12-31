@@ -33,6 +33,7 @@ passport.use(
         newUser.email = email;
         newUser.password = newUser.encryptPassword(password);
         newUser.username = req.body.name;
+        newUser.phone = req.body.phone;
         await newUser.save();
         return done(null, newUser);
       } catch (error) {

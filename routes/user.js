@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const csrf = require('csurf');
 let passport = require('passport');
-let LocalStrategy = require('passport-local').Strategy;
-const Product = require('../models/product');
 const Order = require('../models/order');
 const Cart = require('../models/cart');
 const User = require('../models/user');
@@ -141,6 +139,7 @@ router.get('/edit-profile', middleware.isLoggedIn, async (req, res) => {
 	try {
 		// find all information of this user
 		const user = await User.findById(req.user._id);
+		console.log(user)
 		res.render('user/edit-profile', {
 			user,
 			errorMsg,
@@ -154,12 +153,13 @@ router.get('/edit-profile', middleware.isLoggedIn, async (req, res) => {
 	}
 });
 
-function udpateUser(user, req) {
-	User.findById(user._id, function (err, foundUser) {
+const updateUser = (user, req) => {
+	User.findById(user._id, (err, foundUser) => {
 		if (err) {
 			console.log(err);
 			return res.redirect('/');
 		}
+
 		foundUser.username = req.body.username;
 		foundUser.email = req.body.email;
 		foundUser.firstName = req.body.firstName;
@@ -198,7 +198,7 @@ router.post('/edit-profile', middleware.isLoggedIn, async (req, res, next) => {
 			}
 		}
 		// update the user's information
-		udpateUser(user, req);
+		updateUser(user, req);
 		req.flash('success', 'Successfully updated your profile');
 		res.redirect('/user/profile');
 	} catch (err) {
