@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SECRET_SESSION,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
@@ -62,7 +62,7 @@ app.use(async (req, res, next) => {
 
 // add breadcrumbs
 get_breadcrumbs = (url) => {
-  const rtn = [{ name: "Home", url: "/" }],
+  let rtn = [{ name: "Home", url: "/" }],
     acc = "", // accumulative url
     arr = url.substring(1).split("/");
 
