@@ -62,7 +62,7 @@ app.use(async (req, res, next) => {
 
 // add breadcrumbs
 get_breadcrumbs = (url) => {
-  const rtn = [{ name: "Home", url: "/" }],
+  let rtn = [{ name: "Home", url: "/" }],
     acc = "", // accumulative url
     arr = url.substring(1).split("/");
 
