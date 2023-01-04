@@ -17,10 +17,11 @@ const corsOptions = require("./config/corsOptions");
 const app = express();
 
 require("./config/passport");
-// Cross Origin Resource Sharing
-app.use(credentials);
-app.use(cors(corsOptions));
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // mongodb configuration
 connectDB();
 // view engine setup
