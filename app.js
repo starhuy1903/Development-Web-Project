@@ -11,9 +11,15 @@ const flash = require("connect-flash");
 const MongoStore = require("connect-mongo")(session);
 const Category = require("./models/category");
 const connectDB = require("./config/db");
-
+const cors = require("cors");
+const credentials = require("./middleware/credentials");
+const corsOptions = require("./config/corsOptions");
 const app = express();
+
 require("./config/passport");
+// Cross Origin Resource Sharing
+app.use(credentials);
+app.use(cors(corsOptions));
 
 // mongodb configuration
 connectDB();

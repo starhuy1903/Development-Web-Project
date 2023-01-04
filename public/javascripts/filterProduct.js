@@ -41,8 +41,9 @@ window.onload = function(){
     sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , var(--dark-teal) ${percent1}% , var(--dark-teal) ${percent2}%, #dadae5 ${percent2}%)`;
   }
   
+  var baseUrl = window.location.origin;
   function fetData(current, slug){
-    let url = `http://localhost:3000` + slug + `page=${current}&max=${max}&min=${min}&column=${column}&sort=${sortBy}`
+    let url = baseUrl + slug + `page=${current}&max=${max}&min=${min}&column=${column}&sort=${sortBy}`
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
